@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}Log Food{% endblock %}
+
+{% block content %}
+<h1>🍴 Log Food</h1>
+<p>Add food items from the knowledge base to your daily log.</p>
+
+<div class="card">
+    <h2 class="card-title">Add New Food</h2>
+    <form action="{{ url_for('log') }}" method="POST">
+        <div class="form-group">
+            <label for="food-select">Select Food</label>
+            <select class="form-select" id="food-select" name="food_name">
+                {% for food in food_list %}
+                    <option value="{{ food }}">{{ food }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">✚ Add to Log</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2 class="card-title">Today's Log ({{ today_date }})</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Food</th>
+                <th>Calories</th>
+                <th>Protein</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in today_log %}
+            <tr>
+                <td>{{ item.food_name }}</td>
+                <td>{{ item.calories }}</td>
+                <td>{{ item.protein }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">No food logged yet today.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr style="font-weight: 700;">
+                <td>Total</td>
+                <td>{{ totals.calories|round|int }}</td>
+                <td>{{ totals.protein|round(1) }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}

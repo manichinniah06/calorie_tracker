@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}AI Meal Plan{% endblock %}
+
+{% block content %}
+<h1>🤖 AI Meal Planner</h1>
+
+<div class="card" style="background-color: #e3f2fd; border: 1px solid #90caf9;">
+    <h3 class="card-title" style="margin-bottom: 10px;">Your Remaining Targets for Today</h3>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div>🔥 <strong>{{ remaining.calories }}</strong> kcal</div>
+        <div>🥩 <strong>{{ remaining.protein }}g</strong> Protein</div>
+        <div>🍞 <strong>{{ remaining.carbs }}g</strong> Carbs</div>
+        <div>🥑 <strong>{{ remaining.fat }}g</strong> Fat</div>
+    </div>
+</div>
+
+<p style="margin-top: 20px;">
+    Click below to let the A* Algorithm find the best food combination to hit these targets.
+</p>
+
+<div class="card">
+    <button id="plan-btn" class="btn btn-secondary">Generate Optimized Routine</button>
+    
+    <div id="loading" style="display: none; margin-top: 1rem;">
+        <p>🧠 Analyzing food combinations... (Optimizing for Cal + Pro + Carb + Fat)</p>
+    </div>
+    
+    <div id="plan-result" style="margin-top: 1.5rem;"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('plan-btn').addEventListener('click', async function() {
+    const button = this;
+    const loading = document.getElementById('loading');
+    const resultDiv = document.getElementById('plan-result');
+    
+    button.disabled = true;
+    loading.style.display = 'block';
+    resultDiv.innerHTML = '';
+
+    try {
+        const response = await fetch("{{ url_for('api_generate_plan') }}", { method: 'POST' });
+        const data = await response.json();
+
+        if (data.error) {
+            resultDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+        } else {
+            let html = `
+            <div style="background:#f0f9ff; padding:15px; border-radius:8px; margin-bottom:20px; border: 1px solid #b3e5fc;">
+                <h4 style="margin:0 0 10px 0;">✅ AI Proposed Plan Totals</h4>
+                <strong>${data.stats.calories} kcal</strong> | 
+                P: ${data.stats.protein}g | C: ${data.stats.carbs}g | F: ${data.stats.fat}g
+            </div>`;
+
+            for (const [mealName, items] of Object.entries(data.plan)) {
+                if (items.length > 0) {
+                    html += `<h3 class="card-title" style="margin-top:15px; border-bottom: 2px solid #eee; padding-bottom:5px;">${mealName}</h3>`;
+                    html += '<table class="data-table"><thead><tr><th>Food Item</th></tr></thead><tbody>';
+                    items.forEach(item => {
+                        html += `<tr><td>${item}</td></tr>`;
+                    });
+                    html += '</tbody></table>';
+                }
+            }
+            resultDiv.innerHTML = html;
+        }
+    } catch (err) {
+        resultDiv.innerHTML = `<div class="alert alert-danger">An error occurred.</div>`;
+    } finally {
+        button.disabled = false;
+        loading.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

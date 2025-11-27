@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Diet Tracker{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="navbar-header">
+            <h1>AI Diet</h1>
+            <p>Your Personal Agent</p>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}" 
+                   class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+                   📈 Dashboard
+                </a></li>
+            <li><a href="{{ url_for('profile') }}"
+                   class="{% if request.endpoint == 'profile' %}active{% endif %}">
+                   👤 Profile
+                </a></li>
+            <li><a href="{{ url_for('log') }}"
+                   class="{% if request.endpoint == 'log' %}active{% endif %}">
+                   🍴 Log Food
+                </a></li>
+            <li><a href="{{ url_for('plan') }}"
+                   class="{% if request.endpoint == 'plan' %}active{% endif %}">
+                   🤖 AI Meal Plan
+                </a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Any shared JS can go here
+    </script>
+    {% block scripts %}{% endblock %} </body>
+</html>

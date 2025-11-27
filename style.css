@@ -1,0 +1,207 @@
+/* --- Base & Body Styling --- */
+:root {
+    --primary-color: #3f51b5;
+    --primary-dark: #303f9f;
+    --secondary-color: #9c27b0;
+    --red-color: #d32f2f;
+    --green-color: #4CAF50;
+    --white: #ffffff;
+    --grey-light: #f5f7fa;
+    --grey-text: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--grey-light);
+    color: #111827;
+    margin: 0;
+    display: flex;
+}
+
+/* --- Navigation --- */
+.navbar {
+    width: 250px;
+    background-color: var(--white);
+    height: 100vh;
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 0;
+    flex-shrink: 0;
+}
+.navbar-header {
+    padding: 0 1.5rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--primary-dark);
+}
+.navbar-header p {
+    margin: 0;
+    color: var(--grey-text);
+}
+.navbar ul {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+}
+.navbar li a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+}
+.navbar li a:hover {
+    background-color: var(--grey-light);
+    color: var(--primary-color);
+}
+.navbar li a.active {
+    border-left-color: var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+}
+.main-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 2rem 0;
+    color: #111827;
+}
+
+/* --- Card Styling --- */
+.card {
+    background-color: var(--white);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+}
+
+/* --- Forms & Buttons --- */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+.form-input, .form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.btn-primary:hover { background-color: var(--primary-dark); }
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+/* --- Alerts / Flash Messages --- */
+.alert {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+.alert-success { background-color: #e8f5e9; color: var(--green-color); }
+.alert-danger { background-color: #ffcdd2; color: var(--red-color); }
+
+/* --- Progress Tracking --- */
+.progress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+.progress-metric {
+    background-color: var(--grey-light);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+.progress-metric .label {
+    font-size: 1rem;
+    color: var(--grey-text);
+    margin-bottom: 0.5rem;
+}
+.progress-metric .value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+.progress-metric .value small {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--grey-text);
+}
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--border-color);
+    border-radius: 0.5rem;
+    height: 1.5rem;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    line-height: 1.5rem;
+}
+.progress-bar-protein { background-color: var(--green-color); }
+
+/* --- Tables --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.data-table th, .data-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+.data-table th {
+    background-color: var(--grey-light);
+    font-weight: 700;
+}
